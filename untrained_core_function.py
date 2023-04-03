@@ -6,7 +6,6 @@ from pathlib import Path
 from urllib.error import HTTPError
 import shutil
 import pathlib
-from core_function import corefc
 import configparser
 from datetime import datetime
 from checkdt import checkdate
