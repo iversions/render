@@ -4,7 +4,7 @@ import pdfplumber
 import pathlib
 from pathlib import Path
 import json
-import configparser
+#import configparser
 import pandas as pd
 from checkdt import checkdate
 import time
@@ -16,16 +16,16 @@ from itertools import groupby
 from ast import literal_eval
 import pyodbc
 
-config_obj = configparser.ConfigParser()
-config_obj.read('/home/shashi/Documents/WorkingFolder/venv/afcons/configfile/configfile.ini')
-dbparam = config_obj['mssql']
-fol_loc = config_obj['folder_path']
-badchar = config_obj['bad_char']
+#config_obj = configparser.ConfigParser()
+#config_obj.read('/home/shashi/Documents/WorkingFolder/venv/afcons/configfile/configfile.ini')
+#dbparam = config_obj['mssql']
+#fol_loc = config_obj['folder_path']
+#badchar = config_obj['bad_char']
 
-server = dbparam['server']
-database = dbparam['database']
-username = dbparam['username']
-password = dbparam['password']
+server = 'tcp:sql.prosares.net'
+database = 'Afcons_SIP_DB'
+username = 'Afcons_User'
+password = 'Nimd@!008'
 
 conn = pyodbc.connect('DRIVER={ODBC Driver 18 for SQL Server};SERVER='+server+';DATABASE='+database+';ENCRYPT=yes;UID='+username+';PWD='+ password+';TrustServerCertificate=yes')
 cursor = conn.cursor()
