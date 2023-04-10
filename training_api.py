@@ -4,14 +4,13 @@ from fastapi.exceptions import RequestValidationError
 import uvicorn
 from pydantic import BaseModel
 from fastapi.responses import JSONResponse
-from untrained_core_function import untrained
+from core_function_final import corefc
 
 app = FastAPI()
 
 class Item(BaseModel):
-    rowid: int
-    retrain:bool
-    IsApproved:bool
+    path: path
+    vname:str
 
 
 
@@ -27,7 +26,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["GET"],
+    allow_methods=["POST"],
     allow_headers=["*"],
 )
 
@@ -41,12 +40,11 @@ app.add_middleware(
 # app.middleware('http')(catch_exceptions_middleware)
 
 @app.post("/")
-async def training(item:Item):
+async def extraction(item:Item):
     item_dict = item.dict()
-    train = untrained(item.rowid,item.retrain,item.IsApproved)
-    if train:
+    extract = corefc(item.path,item.vname)
+    if extract:
         responsevar = 'Success'
     else:
         responsevar = 'Failed'
-    return responsevar
-
+    return extract
