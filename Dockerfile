@@ -5,16 +5,12 @@ WORKDIR /code
 COPY ./requirements.txt /code/requirements.txt
 
 RUN pip install --no-cache-dir -r /code/requirements.txt
-RUN <<EOF
-curl https://packages.microsoft.com/config/debian/11/prod.list > /etc/apt/sources.list.d/mssql-release.list
-apt-get -y update
-apt-get install -y msodbcsql18
-echo msodbcsql18 msodbcsql/ACCEPT_EULA boolean true | debconf-set-selections
-ACCEPT_EULA=Y apt-get install -y mssql-tools18
-echo 'export PATH="$PATH:/opt/mssql-tools18/bin"' >> ~/.bashrc
-source ~/.bashrc
-apt-get install -y unixodbc-dev
-EOF
+RUN sh -c "curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -" \
+    && apt-get update \
+    && sh -c "curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list > /etc/apt/sources.list.d/mssql-release.list" \
+    && apt-get update \
+    && ACCEPT_EULA=Y apt-get install -y msodbcsql18 \
+    && ACCEPT_EULA=Y apt-get install -y mssql-tools18
 
 COPY ./ /code
 
