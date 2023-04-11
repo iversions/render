@@ -6,9 +6,7 @@ COPY ./requirements.txt /code/requirements.txt
 
 RUN pip install --no-cache-dir -r /code/requirements.txt
 RUN <<EOF
-su
 curl https://packages.microsoft.com/config/debian/11/prod.list > /etc/apt/sources.list.d/mssql-release.list
-exit
 apt-get -y update
 apt-get install -y msodbcsql18
 echo msodbcsql18 msodbcsql/ACCEPT_EULA boolean true | debconf-set-selections
