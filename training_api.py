@@ -9,7 +9,7 @@ from core_function_final import corefc
 app = FastAPI()
 
 class Item(BaseModel):
-    path: path
+    path: str
     vname:str
 
 
