@@ -15,6 +15,9 @@ from string import ascii_lowercase
 from itertools import groupby
 from ast import literal_eval
 import pyodbc
+import urllib3
+import io
+
 
 #config_obj = configparser.ConfigParser()
 #config_obj.read('/home/shashi/Documents/WorkingFolder/venv/afcons/configfile/configfile.ini')
@@ -116,8 +119,10 @@ def corefc(path,vname):
 
     PASSENGER_NAME_POSITION = PassengerNamePosition# Inv name position
 
-# p0= pdfplumber.open(pdfpath)
-    with pdfplumber.open(path) as p0:
+    http = urllib3.PoolManager()
+    temp = io.BytesIO()
+    temp.write(http.request("GET",path).data)
+    with pdfplumber.open(temp) as p0:
         firstpage = p0.pages[0]
         charst = firstpage.extract_words()
         forgst = firstpage.extract_text()
